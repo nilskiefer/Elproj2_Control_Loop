@@ -30,3 +30,36 @@
 *.exe
 *.out
 *.app
+
+# PlatformIO specific
+.pio
+.pioenvs
+.piolibdeps
+.platformio
+.vscode  # if using Visual Studio Code
+.history # if using PlatformIO History feature
+
+# Additional files and folders
+*.pyc
+*.pyo
+__pycache__/
+.cache/
+.project
+.cproject
+.settings/
+*.swp
+*.bak
+*.tmp
+*.temp
+
+# System-specific files
+**.DS_Store # macOS folder attribute files
+Thumbs.db   # Windows thumbnail cache files
+desktop.ini # Windows folder configuration files
+ehthumbs.db # Windows Media Center thumbnail cache
+
+# Ignore specific files often found in the root of PlatformIO projects
+platformio.ini.local
+
+# Add here other files that you don't want to track in your VCS
+# e.g., private configuration files, build artifacts, etc.

@@ -1,5 +1,6 @@
 #include <Arduino.h>
 
+// OPA
 int sensor1 = A0;
 int sensor2 = A1;
 int sensor3 = A2;
