@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <stdint.h>
 
 enum SensorPins {
     SENSOR1 = A0,
@@ -42,10 +43,12 @@ void setup() {
     Serial.println("Setup done!");
 }
 
-int coilOnDelay = 80;
-
+uint16_t coilOnDelay = 80;
+uint32_t lapCnt = 0;
+uint32_t lapTime = 0;
+uint32_t lastLapTime = 0;
 void loop() {
-    for (int i = 0; i < NUM_SENSOR_COILS; i++) {
+    for (int i = 0; i < NUM_SENSOR_COILS;) {
         int valSensor = analogRead(sensors[i]);
         Serial.print("Sensor " + String(i + 1) + ": " + String(valSensor));
 
@@ -55,8 +58,11 @@ void loop() {
             delay(coilOnDelay);
             Serial.println("Coil " + String(i + 1) + " OFF");
             digitalWrite(coils[i], LOW);
-            break; // Assuming only one sensor activates at a time
+            i++;
         }
     }
-    Serial.println("");
+    lapTime = millis() - lastLapTime;
+
+    Serial.println("Lap cnt: " + String(lapCnt) + "\nLap speed: " + String(lapTime) + "ms\n");
+    lastLapTime = lapTime;
 }
