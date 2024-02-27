@@ -29,9 +29,6 @@ const int sensorCutOffs[NUM_SENSOR_COILS] = {CUT_OFF1, CUT_OFF2, CUT_OFF3, CUT_O
 
 void setup() {
     Serial.begin(115200);
-    Serial.println("BRUH");
-    delay(5000);
-    Serial.println("BRUH");
 
     for (int i = 0; i < NUM_SENSOR_COILS; i++) {
         pinMode(sensors[i], INPUT);
@@ -41,7 +38,6 @@ void setup() {
     }
     while (analogRead(SENSOR1) < CUT_OFF1 || analogRead(SENSOR2) < CUT_OFF2 || analogRead(SENSOR3) < CUT_OFF3 || analogRead(SENSOR4) < CUT_OFF4) {
         Serial.println("Waiting for sensors connected...");
-        delay(500);
     }
     Serial.println("Setup done!");
 }
