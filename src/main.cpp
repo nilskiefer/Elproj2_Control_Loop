@@ -60,23 +60,26 @@ void loop() {
         int valSensor = analogRead(sensors[i]);
 
         if (valSensor < sensorCutOffs[i]) {
-            digitalWrite(coils[i], HIGH);
+
             float currentTime = millis();
             while (analogRead(sensors[i]) < sensorCutOffs[i]) {
-                //
+                // if (millis() - currentTime > 4) {
+                //     digitalWrite(coils[i], HIGH);
+                // }
             }
+            digitalWrite(coils[i], HIGH);
             float senseTime = millis() - currentTime;
 
             // Scale coilOnDelay based on senseTime
             float coilOnDelay = (float)(scalingFactor * senseTime);
             // Enforce limits to keep the delay within a reasonable range
 
-            Serial.println("Sensor " + String(i + 1) + ", Coil " + String(i + 1) + " ON" + ", Delay: " + String(coilOnDelay) + "ms" + ", Time since last activation: " + String(senseTime) + "ms");
             coilOnDelay = max(coilOnDelay, minCoilOnDelay);
             coilOnDelay = min(coilOnDelay, maxCoilOnDelay);
 
             delay(coilOnDelay);
             digitalWrite(coils[i], LOW);
+            Serial.println("Sensor " + String(i + 1) + ", Coil " + String(i + 1) + " ON" + ", Delay: " + String(coilOnDelay) + "ms" + ", Time since last activation: " + String(senseTime) + "ms");
         }
     }
 
