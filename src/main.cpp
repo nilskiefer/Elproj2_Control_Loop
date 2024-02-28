@@ -1,11 +1,12 @@
 #include <Arduino.h>
 #include <algorithm>
 #include <stdint.h>
+
 enum SensorPins {
     SENSOR1 = A0,
     SENSOR2 = A1,
     SENSOR3 = A2,
-    SENSOR4 = 5
+    SENSOR4 = A3
 };
 
 enum CoilPins {
@@ -16,10 +17,10 @@ enum CoilPins {
 };
 
 enum SensorCutOffs {
-    CUT_OFF1 = 4000,
-    CUT_OFF2 = 3500,
-    CUT_OFF3 = 3500,
-    CUT_OFF4 = 4000
+    CUT_OFF1 = 15,
+    CUT_OFF2 = 15,
+    CUT_OFF3 = 15,
+    CUT_OFF4 = 15
 };
 
 const int NUM_SENSOR_COILS = 4;
@@ -36,8 +37,11 @@ void setup() {
         pinMode(coils[i], OUTPUT);
         digitalWrite(coils[i], LOW); // Initial state LOW
     }
-    while (analogRead(SENSOR1) < CUT_OFF1 || analogRead(SENSOR2) < CUT_OFF2 || analogRead(SENSOR3) < CUT_OFF3 || analogRead(SENSOR4) < CUT_OFF4) {
-        Serial.println("Waiting for sensors connected...");
+    Serial.println(String(analogRead(SENSOR1)) + " " + String(analogRead(SENSOR2)) + " " + String(analogRead(SENSOR3)) + " " + String(analogRead(SENSOR4)));
+
+    while (analogRead(SENSOR1) < 4000 && analogRead(SENSOR2) < 4000 && analogRead(SENSOR3) < 4000 && analogRead(SENSOR4) < 4000) {
+        Serial.println(String(analogRead(SENSOR1)) + " " + String(analogRead(SENSOR2)) + " " + String(analogRead(SENSOR3)) + " " + String(analogRead(SENSOR4)));
+        // Serial.println("Waiting for sensors connected...");
     }
     Serial.println("Setup done!");
 }
@@ -48,14 +52,27 @@ float scalingFactor = 1;       // Determines how much the delay changes, adjust 
 float minCoilOnDelay = 0;  // Minimum coil on delay in milliseconds
 float maxCoilOnDelay = 70; // Maximum coil on delay in milliseconds
 
+int readSensorDelta(int sensorPin) {
+    int valSensor = analogRead(sensors[sensorPin]);
+    delay(1);
+    int currentRead = analogRead(sensors[sensorPin]);
+    int delta = valSensor - currentRead;
+    return delta;
+}
 void loop() {
     for (int i = 0; i < NUM_SENSOR_COILS; i++) {
-        int valSensor = analogRead(sensors[i]);
-
-        if (valSensor < sensorCutOffs[i]) {
+        int sensorDelta = readSensorDelta(i);
+        Serial.print("Sensor " + String(i + 1) + " delta: " + String(sensorDelta) + "Sensor reading" + analogRead(sensors[i]) + "\n");
+        if (abs(readSensorDelta(i)) > sensorCutOffs[i]) {
+            Serial.println("Sensor " + String(i + 1) + " activated");
             digitalWrite(coils[i], HIGH);
             float currentTime = millis();
-            while (analogRead(sensors[i]) < sensorCutOffs[i]) {
+            while (abs(sensorDelta) > sensorCutOffs[i]) {
+                Serial.println("Waiting for sensor " + String(i + 1) + " to deactivate..." + String(analogRead(sensors[i])) + " " + String(sensorDelta));
+                sensorDelta = readSensorDelta(i);
+                if (millis() - currentTime > maxCoilOnDelay) {
+                    break;
+                }
                 //
             }
             float senseTime = millis() - currentTime;
@@ -65,13 +82,13 @@ void loop() {
             // Enforce limits to keep the delay within a reasonable range
 
             Serial.println("Sensor " + String(i + 1) + ", Coil " + String(i + 1) + " ON" + ", Delay: " + String(coilOnDelay) + "ms" + ", Time since last activation: " + String(senseTime) + "ms");
-            coilOnDelay = max(coilOnDelay, minCoilOnDelay);
-            coilOnDelay = min(coilOnDelay, maxCoilOnDelay);
+            coilOnDelay = min(coilOnDelay, minCoilOnDelay);
 
             delay(coilOnDelay);
             digitalWrite(coils[i], LOW);
         }
     }
+    Serial.println();
 
     // lapTime = millis() - lastLapTime;
     // Serial.println("Lap cnt: " + String(lapCnt) + "\nLap speed: " + String(lapTime) + "ms\n");
