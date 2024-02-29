@@ -2,6 +2,8 @@
 #include <algorithm>
 #include <stdint.h>
 
+// Test
+
 enum SensorPins {
     SENSOR1 = A0,
     SENSOR2 = A1,
@@ -61,31 +63,29 @@ int readSensorDelta(int sensorPin) {
 }
 void loop() {
     for (int i = 0; i < NUM_SENSOR_COILS; i++) {
-        int sensorDelta = readSensorDelta(i);
-        Serial.print("Sensor " + String(i + 1) + " delta: " + String(sensorDelta) + "Sensor reading" + analogRead(sensors[i]) + "\n");
-        if (abs(readSensorDelta(i)) > sensorCutOffs[i]) {
-            Serial.println("Sensor " + String(i + 1) + " activated");
-            digitalWrite(coils[i], HIGH);
+        int valSensor = analogRead(sensors[i]);
+
+        if (valSensor < sensorCutOffs[i]) {
+
             float currentTime = millis();
-            while (abs(sensorDelta) > sensorCutOffs[i]) {
-                Serial.println("Waiting for sensor " + String(i + 1) + " to deactivate..." + String(analogRead(sensors[i])) + " " + String(sensorDelta));
-                sensorDelta = readSensorDelta(i);
-                if (millis() - currentTime > maxCoilOnDelay) {
-                    break;
-                }
-                //
+            while (analogRead(sensors[i]) < sensorCutOffs[i]) {
+                // if (millis() - currentTime > 4) {
+                //     digitalWrite(coils[i], HIGH);
+                // }
             }
+            digitalWrite(coils[i], HIGH);
             float senseTime = millis() - currentTime;
 
             // Scale coilOnDelay based on senseTime
             float coilOnDelay = (float)(scalingFactor * senseTime);
             // Enforce limits to keep the delay within a reasonable range
 
-            Serial.println("Sensor " + String(i + 1) + ", Coil " + String(i + 1) + " ON" + ", Delay: " + String(coilOnDelay) + "ms" + ", Time since last activation: " + String(senseTime) + "ms");
-            coilOnDelay = min(coilOnDelay, minCoilOnDelay);
+            coilOnDelay = max(coilOnDelay, minCoilOnDelay);
+            coilOnDelay = min(coilOnDelay, maxCoilOnDelay);
 
             delay(coilOnDelay);
             digitalWrite(coils[i], LOW);
+            Serial.println("Sensor " + String(i + 1) + ", Coil " + String(i + 1) + " ON" + ", Delay: " + String(coilOnDelay) + "ms" + ", Time since last activation: " + String(senseTime) + "ms");
         }
     }
     Serial.println();
