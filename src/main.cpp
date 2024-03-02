@@ -1,25 +1,25 @@
 #include <Arduino.h>
-#include <algorithm>
+
 #include <stdint.h>
 enum SensorPins {
     SENSOR1 = A0,
     SENSOR2 = A1,
     SENSOR3 = A2,
-    SENSOR4 = 5
+    SENSOR4 = A3
 };
 
 enum CoilPins {
-    COIL1 = D5,
-    COIL2 = D8,
-    COIL3 = D10,
-    COIL4 = D7
+    COIL1 = 4,
+    COIL2 = 5,
+    COIL3 = 6,
+    COIL4 = 7
 };
 
 enum SensorCutOffs {
-    CUT_OFF1 = 4000,
-    CUT_OFF2 = 3500,
-    CUT_OFF3 = 3500,
-    CUT_OFF4 = 4000
+    CUT_OFF1 = 500,
+    CUT_OFF2 = 500,
+    CUT_OFF3 = 500,
+    CUT_OFF4 = 500
 };
 
 const int NUM_SENSOR_COILS = 4;
@@ -37,7 +37,9 @@ void setup() {
         digitalWrite(coils[i], LOW); // Initial state LOW
     }
     while (analogRead(SENSOR1) < CUT_OFF1 || analogRead(SENSOR2) < CUT_OFF2 || analogRead(SENSOR3) < CUT_OFF3 || analogRead(SENSOR4) < CUT_OFF4) {
-        Serial.println("Waiting for sensors connected...");
+        // Serial.println("Waiting for sensors connected...");
+        Serial.println("Sensor 1: " + String(analogRead(SENSOR1)) + ", Sensor 2: " + String(analogRead(SENSOR2)) + ", Sensor 3: " + String(analogRead(SENSOR3)) + ", Sensor 4: " + String(analogRead(SENSOR4)));
+        delay(50);
     }
     Serial.println("Setup done!");
 }
@@ -53,10 +55,13 @@ void loop() {
         int valSensor = analogRead(sensors[i]);
 
         if (valSensor < sensorCutOffs[i]) {
-            digitalWrite(coils[i], HIGH);
+
             float currentTime = millis();
             while (analogRead(sensors[i]) < sensorCutOffs[i]) {
                 //
+                if (millis() - currentTime > maxCoilOnDelay) {
+                    break;
+                }
             }
             float senseTime = millis() - currentTime;
 
@@ -67,7 +72,7 @@ void loop() {
             Serial.println("Sensor " + String(i + 1) + ", Coil " + String(i + 1) + " ON" + ", Delay: " + String(coilOnDelay) + "ms" + ", Time since last activation: " + String(senseTime) + "ms");
             coilOnDelay = max(coilOnDelay, minCoilOnDelay);
             coilOnDelay = min(coilOnDelay, maxCoilOnDelay);
-
+            digitalWrite(coils[i], HIGH);
             delay(coilOnDelay);
             digitalWrite(coils[i], LOW);
         }

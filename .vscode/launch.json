@@ -12,35 +12,32 @@
             "type": "platformio-debug",
             "request": "launch",
             "name": "PIO Debug",
-            "executable": "/Users/nils/Library/CloudStorage/OneDrive-KTH/elproj 2/Projekt/Elproj2_Messa_Kod/Elproj2_Control_Loop/.pio/build/raspberrypi_pico/firmware.elf",
-            "projectEnvName": "raspberrypi_pico",
-            "toolchainBinDir": "/Users/nils/.platformio/packages/toolchain-gccarmnoneeabi/bin",
+            "executable": "/Users/nils/Documents/GitHub/Elproj2_Control_Loop/.pio/build/arduino_uno/firmware.elf",
+            "projectEnvName": "arduino_uno",
+            "toolchainBinDir": "/Users/nils/.platformio/packages/toolchain-atmelavr/bin",
             "internalConsoleOptions": "openOnSessionStart",
-            "svdPath": "/Users/nils/.platformio/platforms/raspberrypi/misc/svd/rp2040.svd",
             "preLaunchTask": {
                 "type": "PlatformIO",
-                "task": "Pre-Debug (raspberrypi_pico)"
+                "task": "Pre-Debug (arduino_uno)"
             }
         },
         {
             "type": "platformio-debug",
             "request": "launch",
             "name": "PIO Debug (skip Pre-Debug)",
-            "executable": "/Users/nils/Library/CloudStorage/OneDrive-KTH/elproj 2/Projekt/Elproj2_Messa_Kod/Elproj2_Control_Loop/.pio/build/raspberrypi_pico/firmware.elf",
-            "projectEnvName": "raspberrypi_pico",
-            "toolchainBinDir": "/Users/nils/.platformio/packages/toolchain-gccarmnoneeabi/bin",
-            "internalConsoleOptions": "openOnSessionStart",
-            "svdPath": "/Users/nils/.platformio/platforms/raspberrypi/misc/svd/rp2040.svd"
+            "executable": "/Users/nils/Documents/GitHub/Elproj2_Control_Loop/.pio/build/arduino_uno/firmware.elf",
+            "projectEnvName": "arduino_uno",
+            "toolchainBinDir": "/Users/nils/.platformio/packages/toolchain-atmelavr/bin",
+            "internalConsoleOptions": "openOnSessionStart"
         },
         {
             "type": "platformio-debug",
             "request": "launch",
             "name": "PIO Debug (without uploading)",
-            "executable": "/Users/nils/Library/CloudStorage/OneDrive-KTH/elproj 2/Projekt/Elproj2_Messa_Kod/Elproj2_Control_Loop/.pio/build/raspberrypi_pico/firmware.elf",
-            "projectEnvName": "raspberrypi_pico",
-            "toolchainBinDir": "/Users/nils/.platformio/packages/toolchain-gccarmnoneeabi/bin",
+            "executable": "/Users/nils/Documents/GitHub/Elproj2_Control_Loop/.pio/build/arduino_uno/firmware.elf",
+            "projectEnvName": "arduino_uno",
+            "toolchainBinDir": "/Users/nils/.platformio/packages/toolchain-atmelavr/bin",
             "internalConsoleOptions": "openOnSessionStart",
-            "svdPath": "/Users/nils/.platformio/platforms/raspberrypi/misc/svd/rp2040.svd",
             "loadMode": "manual"
         }
     ]
