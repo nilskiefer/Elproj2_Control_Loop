@@ -63,3 +63,7 @@ platformio.ini.local
 
 # Add here other files that you don't want to track in your VCS
 # e.g., private configuration files, build artifacts, etc.
+.DS_Store
+.vscode/c_cpp_properties.json
+.vscode/extensions.json
+.vscode/launch.json

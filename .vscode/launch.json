@@ -12,32 +12,35 @@
             "type": "platformio-debug",
             "request": "launch",
             "name": "PIO Debug",
-            "executable": "C:/Users/nils/Documents/GitHub/Elproj2_Control_Loop/.pio/build/seeed_xiao_esp32c3/firmware.elf",
-            "projectEnvName": "seeed_xiao_esp32c3",
-            "toolchainBinDir": "C:/Users/nils/.platformio/packages/toolchain-riscv32-esp/bin",
+            "executable": "/Users/nils/Library/CloudStorage/OneDrive-KTH/elproj 2/Projekt/Elproj2_Messa_Kod/Elproj2_Control_Loop/.pio/build/raspberrypi_pico/firmware.elf",
+            "projectEnvName": "raspberrypi_pico",
+            "toolchainBinDir": "/Users/nils/.platformio/packages/toolchain-gccarmnoneeabi/bin",
             "internalConsoleOptions": "openOnSessionStart",
+            "svdPath": "/Users/nils/.platformio/platforms/raspberrypi/misc/svd/rp2040.svd",
             "preLaunchTask": {
                 "type": "PlatformIO",
-                "task": "Pre-Debug"
+                "task": "Pre-Debug (raspberrypi_pico)"
             }
         },
         {
             "type": "platformio-debug",
             "request": "launch",
             "name": "PIO Debug (skip Pre-Debug)",
-            "executable": "C:/Users/nils/Documents/GitHub/Elproj2_Control_Loop/.pio/build/seeed_xiao_esp32c3/firmware.elf",
-            "projectEnvName": "seeed_xiao_esp32c3",
-            "toolchainBinDir": "C:/Users/nils/.platformio/packages/toolchain-riscv32-esp/bin",
-            "internalConsoleOptions": "openOnSessionStart"
+            "executable": "/Users/nils/Library/CloudStorage/OneDrive-KTH/elproj 2/Projekt/Elproj2_Messa_Kod/Elproj2_Control_Loop/.pio/build/raspberrypi_pico/firmware.elf",
+            "projectEnvName": "raspberrypi_pico",
+            "toolchainBinDir": "/Users/nils/.platformio/packages/toolchain-gccarmnoneeabi/bin",
+            "internalConsoleOptions": "openOnSessionStart",
+            "svdPath": "/Users/nils/.platformio/platforms/raspberrypi/misc/svd/rp2040.svd"
         },
         {
             "type": "platformio-debug",
             "request": "launch",
             "name": "PIO Debug (without uploading)",
-            "executable": "C:/Users/nils/Documents/GitHub/Elproj2_Control_Loop/.pio/build/seeed_xiao_esp32c3/firmware.elf",
-            "projectEnvName": "seeed_xiao_esp32c3",
-            "toolchainBinDir": "C:/Users/nils/.platformio/packages/toolchain-riscv32-esp/bin",
+            "executable": "/Users/nils/Library/CloudStorage/OneDrive-KTH/elproj 2/Projekt/Elproj2_Messa_Kod/Elproj2_Control_Loop/.pio/build/raspberrypi_pico/firmware.elf",
+            "projectEnvName": "raspberrypi_pico",
+            "toolchainBinDir": "/Users/nils/.platformio/packages/toolchain-gccarmnoneeabi/bin",
             "internalConsoleOptions": "openOnSessionStart",
+            "svdPath": "/Users/nils/.platformio/platforms/raspberrypi/misc/svd/rp2040.svd",
             "loadMode": "manual"
         }
     ]
